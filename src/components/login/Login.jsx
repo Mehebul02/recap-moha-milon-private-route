@@ -1,11 +1,33 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-
+import { AuthContext } from "../../provider/AuthProvider";
+import toast, { Toaster } from 'react-hot-toast';
 const Login = () => {
+    const {loginEmail,googleSing} = useContext(AuthContext)
     const handleLogin =e=>{
         e.preventDefault()
         const email =e.target.email.value
         const password =e.target.password.value
         console.log(email,password)
+        loginEmail(email,password)
+        .then(result =>{
+            console.log(result.user)
+            toast.success('Login Successfully')
+            e.target.reset()
+        })
+        .catch(error =>{
+            console.log(error)
+        })
+    }
+    // google Sing 
+    const handleGoogleSing =()=>{
+        googleSing()
+        .then(result =>{
+            console.log(result.user)
+        })
+        .catch(error =>{
+            console.log(error)
+        })
     }
     return (
         <div className="hero min-h-screen  bg-base-200">
@@ -32,9 +54,12 @@ const Login = () => {
               </div>
               <div className="form-control mt-6">
               <button className="bg-primary p-2 rounded-lg text-xl text-white">Login</button>
-              <p>New here?please<Link to='/register'><button className="btn btn-link">Register</button></Link></p>
+              
+              <Toaster />
               </div>
              </form>
+             <button onClick={handleGoogleSing} className="bg-yellow-600 mt-5 p-2 text-xl rounded-lg text-white ">Google</button>
+              <p>New here?please<Link to='/register'><button className="btn btn-link">Register</button></Link></p>
             </div>
           </div>
         </div>
