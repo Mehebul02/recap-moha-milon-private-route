@@ -5,25 +5,31 @@ import auth from "../firebase/firebase_config";
 export const AuthContext = createContext(null)
 const AuthProvider = ({children}) => {
     const [users , setUSers] = useState(null)
+    const [loading,setLoading] = useState(true)
     const googleProvider = new GoogleAuthProvider()
     // create user email account 
     const createUsers =(email,password) =>{
+        setLoading(true)
         return createUserWithEmailAndPassword(auth,email,password)
     }
     // login email address 
     const loginEmail =(email,password) => {
+        setLoading(true)
         return signInWithEmailAndPassword(auth, email, password)
     }
     // google sing in 
     const googleSing =()=>{
+        setLoading(true)
         return signInWithPopup(auth,googleProvider)
     }
     // sing out 
     const userSignOut =()=>{
+        setLoading(true)
         return signOut(auth)
     }
     useEffect(()=>{
         const unSubscribe =onAuthStateChanged(auth,currentUser =>{
+            setLoading(false)
             setUSers(currentUser)
             console.log('tui theke ja',currentUser)
         }) ;
@@ -35,6 +41,7 @@ const AuthProvider = ({children}) => {
     },[])
     const authInfo ={
         users,
+        loading,
         setUSers,
         createUsers,
         loginEmail,

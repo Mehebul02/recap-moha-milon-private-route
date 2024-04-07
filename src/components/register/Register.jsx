@@ -5,7 +5,10 @@ import toast, { Toaster } from 'react-hot-toast';
 const Register = () => {
     // const [passwordError,setPasswordError] =useState('')
     // const [success,setSuccess] =useState('')
-    const {createUsers} = useContext(AuthContext)
+    const {createUsers,loading} = useContext(AuthContext)
+    if(loading){
+        return <div className="text-center mt-10"><span className="loading  loading-bars loading-lg"></span></div>
+    }
     const handleRegister=e=>{
         e.preventDefault()
         const email =e.target.email.value

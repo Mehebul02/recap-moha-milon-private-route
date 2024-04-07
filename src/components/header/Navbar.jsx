@@ -24,6 +24,13 @@ const Navbar = () => {
        <NavLink to='/' className={({isActive})=>isActive?'border-b-2 border-red-600 text-xl text-black':''}> <li className="text-xl text-black">Home</li></NavLink>
        <NavLink to='/login' className={({isActive})=>isActive?'border-b-2 border-red-600 text-xl text-black':''}> <li className="text-xl text-black">Login</li></NavLink>
        <NavLink to='/register' className={({isActive})=>isActive?'border-b-2 border-red-600 text-xl text-black':''}> <li className="text-xl text-black">Register</li></NavLink>
+       <NavLink to='/orders' className={({isActive})=>isActive?'border-b-2 border-red-600 text-xl text-black':''}> <li className="text-xl text-black">Orders</li></NavLink>
+      {users &&
+       <>
+       <NavLink to='/profile' className={({isActive})=>isActive?'border-b-2 border-red-600 text-xl text-black':''}> <li className="text-xl text-black">Profile</li></NavLink>
+       <NavLink to='/deshboard' className={({isActive})=>isActive?'border-b-2 border-red-600 text-xl text-black':''}> <li className="text-xl text-black">Deshboard</li></NavLink>
+       </>
+       }
         
       
       </ul>
@@ -35,12 +42,13 @@ const Navbar = () => {
         }
       <button className="btn">Log Out</button>
     </div> */}
-    <div className="dropdown dropdown-end">
+    
+         {users ? <>
+          <div className="dropdown dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
-         {users && <img alt="Tailwind CSS Navbar component" src={users.photoURL} />}
-      
-        </div>
+          <img alt="Alif" src={users.photoURL} />
+          </div>
       </div>
       <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
     
@@ -48,6 +56,11 @@ const Navbar = () => {
         <li onClick={handleSignOut}><a>Logout</a></li>
       </ul>
     </div>
+         </>
+         : <Link to='/login'><button className="btn">Login</button></Link>
+         }
+      
+        
   </div>
 </div>
     );

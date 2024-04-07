@@ -2,8 +2,14 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../provider/AuthProvider";
 import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from "react-router-dom";
+
 const Login = () => {
-    const {loginEmail,googleSing} = useContext(AuthContext)
+    const {loginEmail,googleSing,loading} = useContext(AuthContext)
+    const navigate = useNavigate()
+    if(loading){
+        return <div className="text-center mt-10"><span className="loading  loading-bars loading-lg"></span></div>
+    }
     const handleLogin =e=>{
         e.preventDefault()
         const email =e.target.email.value
@@ -14,6 +20,7 @@ const Login = () => {
             console.log(result.user)
             toast.success('Login Successfully')
             e.target.reset()
+          navigate('/orders')
         })
         .catch(error =>{
             console.log(error)
